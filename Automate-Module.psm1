@@ -552,23 +552,23 @@ Function Install-Automate {
             Stop-Process -Name "ltsvcmon","lttray","ltsvc","ltclient" -Force -PassThru
             $Date = (get-date -UFormat %Y-%m-%d_%H-%M-%S)
             $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
-            $InstallExitCode = (Start-Process cmd -ArgumentList "/c msiexec /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /L*V $($LogFullPath)" -NoNewWindow -Wait -PassThru).ExitCode
+            & "msiexec.exe" /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /L*V $($LogFullPath) | Out-Null
             Write-Verbose "MSIEXEC Log Files: $LogFullPath"
-            If ($InstallExitCode -eq 0) {
+            If ($LASTEXITCODE -eq 0) {
                 If (!$Silent) {Write-Verbose "The Automate Agent Installer Executed Without Errors"}
             } Else {
-                Write-Host "Automate Installer Exit Code: $InstallExitCode" -ForegroundColor Red
+                Write-Host "Automate Installer Exit Code: $LASTEXITCODE" -ForegroundColor Red
                 Write-Host "Automate Installer Logs: $LogFullPath" -ForegroundColor Red
                 Write-Host "The Automate MSI failed. Waiting 15 Seconds..." -ForegroundColor Red
                 Start-Sleep -s 15
                 Write-Host "Installer will execute twice (KI 12002617)" -ForegroundColor Yellow
                 $Date = (get-date -UFormat %Y-%m-%d_%H-%M-%S)
                 $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
-                $InstallExitCode = (Start-Process cmd -ArgumentList "/c msiexec /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /L*V $($LogFullPath)" -NoNewWindow -Wait -PassThru).ExitCode
-                Write-Host "Automate Installer Exit Code: $InstallExitCode" -ForegroundColor Yellow
+                & "msiexec.exe" /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /L*V $($LogFullPath) | Out-Null
+                Write-Host "Automate Installer Exit Code: $LASTEXITCODE" -ForegroundColor Yellow
                 Write-Host "Automate Installer Logs: $LogFullPath" -ForegroundColor Yellow
             }# End Else
-        If ($InstallExitCode -eq 0) {
+        If ($LASTEXITCODE -eq 0) {
             While ($Counter -ne 30) {
                 $Counter++
                 Start-Sleep 10
