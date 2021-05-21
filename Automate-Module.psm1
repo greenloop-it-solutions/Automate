@@ -523,7 +523,10 @@ Function Install-Automate {
             Stop-Process -Name "ltsvcmon","lttray","ltsvc","ltclient" -Force -PassThru
             $Date = (Get-Date -UFormat %Y-%m-%d_%H-%M-%S)
             $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
-            $InstallExitCode = (Start-Process "msiexec.exe" -ArgumentList "/i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)" -NoNewWindow -Wait -PassThru).ExitCode
+        $Arguments = @"
+        /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)
+"@
+            $InstallExitCode = (Start-Process "msiexec.exe" -ArgumentList $Arguments -WorkingDirectory $SoftwarePath -Wait -PassThru).ExitCode
             Write-Verbose "MSIEXEC Log Files: $LogFullPath"
             if ($InstallExitCode -eq 0) {
                 if (!$Silent) {Write-Verbose "The Automate Agent Installer Executed Without Errors"}
@@ -535,7 +538,10 @@ Function Install-Automate {
                 Write-Host "Installer will execute twice (KI 12002617)" -ForegroundColor Yellow
                 $Date = (Get-Date -UFormat %Y-%m-%d_%H-%M-%S)
                 $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
-                $InstallExitCode = (Start-Process "msiexec.exe" -ArgumentList "/i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)" -NoNewWindow -Wait -PassThru).ExitCode
+            $Arguments = @"
+            /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)
+"@
+            $InstallExitCode = (Start-Process "msiexec.exe" -ArgumentList $Arguments -WorkingDirectory $SoftwarePath -Wait -PassThru).ExitCode
                 Write-Host "Automate Installer Exit Code: $InstallExitCode" -ForegroundColor Yellow
                 Write-Host "Automate Installer Logs: $LogFullPath" -ForegroundColor Yellow
             }# End else
