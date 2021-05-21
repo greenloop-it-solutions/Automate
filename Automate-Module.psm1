@@ -524,7 +524,7 @@ Function Install-Automate {
             $Date = (Get-Date -UFormat %Y-%m-%d_%H-%M-%S)
             $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
             $Arguments = '-NoExit', '-Command', "Set-Location '$SoftwarePath'; msiexec.exe /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)"
-            $InstallExitCode = (Start-Process "powershell.exe" -Verb runAs -ArgumentList $Arguments -Wait -PassThru).ExitCode
+            $InstallExitCode = (Start-Process "powershell.exe" -ArgumentList $Arguments -Wait -PassThru).ExitCode
             Write-Verbose "MSIEXEC Log Files: $LogFullPath"
             if ($InstallExitCode -eq 0) {
                 if (!$Silent) {Write-Verbose "The Automate Agent Installer Executed Without Errors"}
@@ -537,7 +537,7 @@ Function Install-Automate {
                 $Date = (Get-Date -UFormat %Y-%m-%d_%H-%M-%S)
                 $LogFullPath = "$env:windir\Temp\Automate_Agent_$Date.log"
                 $Arguments = '-NoExit', '-Command', "Set-Location '$SoftwarePath'; msiexec.exe /i $($SoftwareFullPath) /qn /norestart LOCATION=$($LocationID) SERVERADDRESS=$($AutomateURL) /l*v $($LogFullPath)"
-                $InstallExitCode = (Start-Process "powershell.exe" -Verb runAs -ArgumentList $Arguments -Wait -PassThru).ExitCode
+                $InstallExitCode = (Start-Process "powershell.exe" -ArgumentList $Arguments -Wait -PassThru).ExitCode
                 Write-Host "Automate Installer Exit Code: $InstallExitCode" -ForegroundColor Yellow
                 Write-Host "Automate Installer Logs: $LogFullPath" -ForegroundColor Yellow
             }# End else
