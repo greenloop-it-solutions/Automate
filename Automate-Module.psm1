@@ -387,7 +387,7 @@ Function Install-Automate {
 
     Version        : 1.1
     Date           : 11/15/2019
-    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be considered for $Automate.Installed
+    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check both to be considered for $Automate.Installed
                     It was found that the Automate Uninstaller EXE is leaving behind the LabTech registry keys and it was not being detected properly.
                     If the LTSVC Folder or Registry keys are found after the uninstaller runs, the script now performs a manual gutting via PowerShell.
 
