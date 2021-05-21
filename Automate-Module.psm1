@@ -21,7 +21,7 @@
 
     Version        : 1.1
     Date           : 11/15/2019
-    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be consdered for $Automate.Installed
+    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check both to be considered for $Automate.Installed
                     It was found that the Automate Uninstaller EXE is leaving behind the LabTech registry keys and it was not being detected properly.
 
 
@@ -65,13 +65,13 @@ Function Confirm-Automate {
 
     Version        : 1.1
     Date           : 11/15/2019
-    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be consdered for $Automate.Installed
+    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check both to be consdered for $Automate.Installed
                     It was found that the Automate Uninstaller EXE is leaving behind the LabTech registry keys and it was not being detected properly.
 
     Version        : 1.2
     Date           : 04/02/2020
     Changes        : Add $Automate.Service -eq $null
-                    if the service still exists, the installation is failing with Exit Code 1638.
+                    If the service still exists, the installation is failing with Exit Code 1638.
 
 .EXAMPLE
     Confirm-Automate [-Silent]
@@ -154,7 +154,7 @@ Set-Alias -Name LTC -Value Confirm-Automate -Description 'Confirm if Automate is
 Function Uninstall-Automate {
 <#
 .SYNOPSIS
-    This PowerShell Function Uninstall Automate.
+    This PowerShell Function Uninstalls Automate.
 
 .DESCRIPTION
     This function will download the Automate Uninstaller from Connectwise and completely remove the Automate / LabTech Agent.
@@ -174,14 +174,14 @@ Function Uninstall-Automate {
 
     Version        : 1.1
     Date           : 11/15/2019
-    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be consdered for $Automate.Installed
+    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check both to be considered for $Automate.Installed
                     It was found that the Automate Uninstaller EXE is leaving behind the LabTech registry keys and it was not being detected properly.
-                    if the LTSVC Folder or Registry keys are found after the uninstaller runs, the script now performs a manual gutting via PowerShell.
+                    If the LTSVC Folder or Registry keys are found after the uninstaller runs, the script now performs a manual gutting via PowerShell.
 
     Version        : 1.2
     Date           : 04/02/2020
     Changes        : Add $Automate.Service -eq $null
-                    if the service still exists, the installation is failing with Exit Code 1638.
+                    If the service still exists, the installation is failing with Exit Code 1638.
 
 .EXAMPLE
     Uninstall-Automate [-Silent]
@@ -313,16 +313,16 @@ Function Install-Automate {
 .DESCRIPTION
     Install the Automate Agent.
 
-    This function will qualify the if another Autoamte agent is already
-    installed on the computer. if the existing agent belongs to different
+    This function will qualify if another Automate agent is already
+    installed on the computer. If the existing agent belongs to a different
     Automate server, it will automatically "Rip & Replace" the existing
     agent. This comparison is based on the server's FQDN.
 
     This function will also verify if the existing Automate agent is
     checking-in. The Confirm-Automate Function will verify the Server
-    address, LocationID, and Heartbeat/Check-in. if these entries are
-    missing or not checking-in properly; this function will automatically
-    attempt to restart the services, and then "Rip & Replace" the agent to
+    address, LocationID, and Heartbeat/Check-in. If these entries are
+    missing or not checking-in properly, this function will automatically
+    attempt to restart the services and then "Rip & Replace" the agent to
     remediate the agent.
 
     $Automate
@@ -350,13 +350,13 @@ Function Install-Automate {
         Install-Automate -Server 'server.hostedrmm.com' -LocationID 2
 
 .PARAMETER LocationID
-    Use LocationID to install the Automate Agent directly to the appropieate client's location / site.
-    if parameter is not specified, it will automatically assign LocationID 1 (New Computers).
+    Use LocationID to install the Automate Agent directly to the appropriate client's location / site.
+    If parameter is not specified, it will automatically assign LocationID 1 (New Computers).
 
 .PARAMETER Token
-    Use Token to install the Automate Agent directly to the appropieate client's location / site.
-    if parameter is not specified, it will automatically attempt to use direct unauthenticated downloads.
-    This method in blocked after Automate v20.0.6.178 (Patch 6)
+    Use Token to install the Automate Agent directly to the appropriate client's location / site.
+    If parameter is not specified, it will automatically attempt to use direct unauthenticated downloads.
+    This method is blocked after Automate v20.0.6.178 (Patch 6)
 
 .PARAMETER Force
     This will force the Automate Uninstaller prior to installation.
@@ -371,7 +371,7 @@ Function Install-Automate {
         Install-Automate -Server 'server.hostedrmm.com' -LocationID 2 -Silent
 
 .PARAMETER Transcript
-    This parameter will save the entire transcript and responsed to:
+    This parameter will save the entire transcript and response to:
     $($env:windir)\Temp\AutomateLogon.txt
 
         Install-Automate -Server 'server.hostedrmm.com' -LocationID 2 -Transcript -Verbose
@@ -387,9 +387,9 @@ Function Install-Automate {
 
     Version        : 1.1
     Date           : 11/15/2019
-    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be consdered for $Automate.Installed
+    Changes        : Add $Automate.InstFolder and $Automate.InstRegistry and check for both to be considered for $Automate.Installed
                     It was found that the Automate Uninstaller EXE is leaving behind the LabTech registry keys and it was not being detected properly.
-                    if the LTSVC Folder or Registry keys are found after the uninstaller runs, the script now performs a manual gutting via PowerShell.
+                    If the LTSVC Folder or Registry keys are found after the uninstaller runs, the script now performs a manual gutting via PowerShell.
 
     Version        : 1.2
     Date           : 02/17/2020
